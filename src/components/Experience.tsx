@@ -6,8 +6,8 @@ export const Experience = () => {
     <>
       <OrbitControls />
       <mesh>
-        <boxGeometry />
-        <meshNormalMaterial />
+        <sphereGeometry args={[5, 10, 10]} />
+        <meshBasicMaterial color={"#ff0000"} />
       </mesh>
     </>
   );
