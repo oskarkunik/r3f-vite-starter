@@ -21,15 +21,16 @@ export const Experience = () => {
     );
 
   useEffect(() => {
-    makeHex(1, new Vector2(0, 0));
+    makeHex(5, new Vector2(0, 0));
   }, []);
 
   return (
     <>
+      <gridHelper />
       <OrbitControls enableDamping dampingFactor={0.05} />
       <mesh geometry={hexagonGeometries}>
         <Environment files="src/assets/hdri/env.hdr" />
-        <meshStandardMaterial roughness={0} metalness={1} flatShading />
+        <meshStandardMaterial roughness={1} metalness={0} flatShading />
       </mesh>
     </>
   );
