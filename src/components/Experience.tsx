@@ -3,10 +3,15 @@ import React, { useEffect, useState } from "react";
 import { BoxGeometry, BufferGeometry, CylinderGeometry, Vector2 } from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
+const HEXAGON_SPACING = 1.03; // Abything above 1 will increase gaps between hexagons
+
+/**
+ * See here for explanation of offsets: https://www.redblobgames.com/grids/hexagons/
+ */
 const HEX_GRID = {
-  SIZE: 10,
-  ROW_OFFSET: 1.77,
-  COLUMN_OFFSET: 1.535,
+  SIZE: 20,
+  ROW_OFFSET: Math.sqrt(3) * HEXAGON_SPACING,
+  COLUMN_OFFSET: (3 / 2) * HEXAGON_SPACING,
 };
 
 const createHexGeometry = (height: number, position: Vector2) =>
@@ -34,8 +39,23 @@ export const Experience = () => {
 
   useEffect(() => {
     new Array(HEX_GRID.SIZE).fill(0).forEach((row, rowIndex) => {
-      new Array(HEX_GRID.SIZE).fill(0).forEach((column, columnIndex) => {
-        appendHexagon(1, tileToPosition(rowIndex, columnIndex));
+      new Array(HEX_GRID.SIZE * 2).fill(0).forEach((column, columnIndex) => {
+        /**
+         * The offsets are for moving the grid by half to the top and left.
+         * This way checking if the hexagon belongs to a rough circle makes sense.
+         */
+        const rowIndexOffset = rowIndex - HEX_GRID.SIZE / 2;
+        const columnIndexOffset = columnIndex - HEX_GRID.SIZE;
+
+        if (
+          new Vector2(rowIndexOffset, columnIndexOffset).length() >
+          HEX_GRID.SIZE / 2 + 1
+        ) {
+          return;
+        }
+
+        const position = tileToPosition(rowIndexOffset, columnIndexOffset);
+        appendHexagon(3, position);
       });
     });
   }, []);
@@ -44,7 +64,7 @@ export const Experience = () => {
     <>
       <gridHelper />
       <OrbitControls enableDamping dampingFactor={0.05} />
-      <mesh geometry={hexagonGeometries.center()}>
+      <mesh geometry={hexagonGeometries}>
         <Environment files="src/assets/hdri/env.hdr" />
         <meshStandardMaterial roughness={1} metalness={0} flatShading />
       </mesh>
