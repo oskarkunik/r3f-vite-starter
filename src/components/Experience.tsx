@@ -4,6 +4,10 @@ import { BoxGeometry, BufferGeometry, CylinderGeometry, Vector2 } from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 const HEX_GRID_SIZE = 10;
+const HEX_GRID = {
+  ROW_OFFSET: 1.77,
+  COLUMN_OFFSET: 1.535,
+};
 
 const createHexGeometry = (height: number, position: Vector2) =>
   new CylinderGeometry(1, 1, height, 6, 1, false).translate(
@@ -12,8 +16,11 @@ const createHexGeometry = (height: number, position: Vector2) =>
     position.y
   );
 
-const tileToPosition = (tileX: number, tileY: number) =>
-  new Vector2((tileX + (tileY % 2) * 0.5) * 1.77, tileY * 1.535);
+const tileToPosition = (tileX: number, tileY: number) => {
+  const rowPosition = (tileX + (tileY % 2) * 0.5) * HEX_GRID.ROW_OFFSET;
+  const columnPosition = tileY * HEX_GRID.COLUMN_OFFSET;
+  return new Vector2(rowPosition, columnPosition);
+};
 
 export const Experience = () => {
   const [hexagonGeometries, setHexagonGeometries] = useState<BufferGeometry>(
