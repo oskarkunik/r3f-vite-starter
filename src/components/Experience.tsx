@@ -27,7 +27,7 @@ export const Experience = () => {
     new BoxGeometry(0, 0, 0)
   );
 
-  const makeHex = (height: number, position: Vector2) =>
+  const appendHexagon = (height: number, position: Vector2) =>
     setHexagonGeometries((current) =>
       mergeGeometries([current, createHexGeometry(height, position)])
     );
@@ -35,7 +35,7 @@ export const Experience = () => {
   useEffect(() => {
     new Array(HEX_GRID_SIZE).fill(0).forEach((row, rowIndex) => {
       new Array(HEX_GRID_SIZE).fill(0).forEach((column, columnIndex) => {
-        makeHex(1, tileToPosition(rowIndex, columnIndex));
+        appendHexagon(1, tileToPosition(rowIndex, columnIndex));
       });
     });
   }, []);
@@ -44,7 +44,7 @@ export const Experience = () => {
     <>
       <gridHelper />
       <OrbitControls enableDamping dampingFactor={0.05} />
-      <mesh geometry={hexagonGeometries}>
+      <mesh geometry={hexagonGeometries.center()}>
         <Environment files="src/assets/hdri/env.hdr" />
         <meshStandardMaterial roughness={1} metalness={0} flatShading />
       </mesh>
