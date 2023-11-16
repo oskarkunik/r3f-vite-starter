@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { BoxGeometry, BufferGeometry, CylinderGeometry, Vector2 } from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
-const HEX_GRID_SIZE = 10;
 const HEX_GRID = {
+  SIZE: 10,
   ROW_OFFSET: 1.77,
   COLUMN_OFFSET: 1.535,
 };
@@ -33,8 +33,8 @@ export const Experience = () => {
     );
 
   useEffect(() => {
-    new Array(HEX_GRID_SIZE).fill(0).forEach((row, rowIndex) => {
-      new Array(HEX_GRID_SIZE).fill(0).forEach((column, columnIndex) => {
+    new Array(HEX_GRID.SIZE).fill(0).forEach((row, rowIndex) => {
+      new Array(HEX_GRID.SIZE).fill(0).forEach((column, columnIndex) => {
         appendHexagon(1, tileToPosition(rowIndex, columnIndex));
       });
     });
