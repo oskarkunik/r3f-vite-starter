@@ -5,9 +5,10 @@ export const Experience = () => {
   return (
     <>
       <OrbitControls />
+      <ambientLight />
       <mesh>
-        <boxGeometry />
-        <meshNormalMaterial />
+        <icosahedronGeometry args={[4, 30]} />
+        <meshStandardMaterial wireframe color="#ffffff" />
       </mesh>
     </>
   );
