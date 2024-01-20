@@ -15,11 +15,12 @@ export const Experience = () => {
         rotation={[-Math.PI / 2, 0, 0]}
         scale={1.5}
       >
-        <icosahedronGeometry args={[4, 30]} />
+        <planeGeometry args={[1, 1, 32, 32]} />
+        {/* <icosahedronGeometry args={[4, 30]} /> */}
         <shaderMaterial
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
-          wireframe
+          // wireframe
         />
       </mesh>
     </>
