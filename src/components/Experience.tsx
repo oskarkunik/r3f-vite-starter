@@ -1,7 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import React, { useRef } from "react";
-import vertexShader from "./vertexShader_blank.glsl?raw";
-import fragmentShader from "./fragmentShader.glsl?raw";
+import vertexShader from "./shaders/vertex/vertexShader_blank.glsl?raw";
+import fragmentShader from "./shaders/fragment/red.glsl?raw";
 
 export const Experience = () => {
   const mesh = useRef(null);
