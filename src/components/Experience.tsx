@@ -1,13 +1,29 @@
 import { OrbitControls } from "@react-three/drei";
-import React, { useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import vertexShader from "./shaders/vertex/vertexShader_blank.glsl?raw";
-import fragmentShader from "./shaders/fragment/red.glsl?raw";
+import fragmentShader from "./shaders/fragment/uniform_time.glsl?raw";
+import { useFrame } from "@react-three/fiber";
 
 export const Experience = () => {
   const mesh = useRef(null);
+
+  const uniforms = useMemo(
+    () => ({
+      u_time: {
+        value: 0.0,
+      },
+    }),
+    []
+  );
+
+  useFrame((state) => {
+    const { clock } = state;
+    mesh.current.material.uniforms.u_time.value = clock.getElapsedTime();
+  });
+
   return (
     <>
-      {/* <OrbitControls /> */}
+      <OrbitControls />
       <ambientLight />
       <mesh ref={mesh} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={1}>
         <planeGeometry args={[1, 1, 32, 32]} />
@@ -16,6 +32,7 @@ export const Experience = () => {
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
           wireframe={false}
+          uniforms={uniforms}
         />
       </mesh>
     </>
