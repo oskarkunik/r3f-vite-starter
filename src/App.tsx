@@ -4,7 +4,7 @@ import React from "react";
 
 function App() {
   return (
-    <Canvas shadows camera={{ position: [15, 15, 15], fov: 30 }}>
+    <Canvas shadows camera={{ position: [0, 0, 2], fov: 30 }}>
       <color attach="background" args={["#222222"]} />
       <Experience />
     </Canvas>

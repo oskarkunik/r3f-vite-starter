@@ -1,26 +1,21 @@
 import { OrbitControls } from "@react-three/drei";
 import React, { useRef } from "react";
-import vertexShader from "./vertexShader.glsl?raw";
+import vertexShader from "./vertexShader_blank.glsl?raw";
 import fragmentShader from "./fragmentShader.glsl?raw";
 
 export const Experience = () => {
   const mesh = useRef(null);
   return (
     <>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
       <ambientLight />
-      <mesh
-        ref={mesh}
-        position={[0, 0, 0]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1}
-      >
-        {/* <planeGeometry args={[1, 1, 32, 32]} /> */}
-        <icosahedronGeometry args={[4, 30]} />
+      <mesh ref={mesh} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={1}>
+        <planeGeometry args={[1, 1, 32, 32]} />
+        {/* <icosahedronGeometry args={[4, 30]} /> */}
         <shaderMaterial
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
-          wireframe
+          wireframe={false}
         />
       </mesh>
     </>
