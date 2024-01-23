@@ -14,9 +14,7 @@ export const Experience = () => {
       u_time: {
         value: 0.0,
       },
-      u_resolution: new Uniform(
-        new Vector2(window.innerWidth, window.innerHeight)
-      ),
+      u_resolution: new Uniform(new Vector2(100, 100)),
     }),
     []
   );
@@ -32,7 +30,6 @@ export const Experience = () => {
       <ambientLight />
       <mesh ref={mesh} position={[0, 0, 0]} rotation={[0, 0, 0]} scale={1}>
         <planeGeometry args={[1, 1, 32, 32]} />
-        {/* <icosahedronGeometry args={[4, 30]} /> */}
         <shaderMaterial
           fragmentShader={fragmentShader}
           vertexShader={vertexShader}
