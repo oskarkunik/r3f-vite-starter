@@ -1,8 +1,10 @@
 import { OrbitControls } from "@react-three/drei";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import vertexShader from "./shaders/vertex/vertexShader_blank.glsl?raw";
-import fragmentShader from "./shaders/fragment/uniform_time.glsl?raw";
+// import fragmentShader from "./shaders/fragment/uniform_time.glsl?raw";
+import fragmentShader from "./shaders/fragment/frag_coord.glsl?raw";
 import { useFrame } from "@react-three/fiber";
+import THREE, { Uniform, Vector2 } from "three";
 
 export const Experience = () => {
   const mesh = useRef(null);
@@ -11,6 +13,9 @@ export const Experience = () => {
     () => ({
       u_time: {
         value: 0.0,
+      },
+      u_resolution: {
+        value: [window.innerWidth, window.innerHeight],
       },
     }),
     []
