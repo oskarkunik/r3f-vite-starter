@@ -14,9 +14,9 @@ export const Experience = () => {
       u_time: {
         value: 0.0,
       },
-      u_resolution: {
-        value: [window.innerWidth, window.innerHeight],
-      },
+      u_resolution: new Uniform(
+        new Vector2(window.innerWidth, window.innerHeight)
+      ),
     }),
     []
   );
