@@ -1,11 +1,11 @@
+#ifdef GL_ES
+precision mediump float;
+#endif
 
 varying vec2 vUv;
-
-vec3 colorA = vec3(0.912,0.191,0.652);
-vec3 colorB = vec3(1.000,0.777,0.052);
+uniform vec2 u_mouse;
+uniform float u_time;
 
 void main() {
-  vec3 color = mix(colorA, colorB, vUv.x);
-
-  gl_FragColor = vec4(color,1.0);
+	gl_FragColor = vec4(min(vUv.x, u_mouse.x),min(vUv.y, u_mouse.y),min(abs(sin(u_time)), min(u_mouse.x, u_mouse.y)),1.0);
 }
