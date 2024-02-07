@@ -1,57 +1,59 @@
 import { OrbitControls } from "@react-three/drei";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import vertexShader from "./shaders/vertex/vertexShader_blank.glsl?raw";
+import vertexShader from "./shaders/vertex/vertexShader_sin_animation.glsl?raw";
 // import fragmentShader from "./shaders/fragment/uniform_time.glsl?raw";
-import fragmentShader from "./shaders/fragment/frag_coord.glsl?raw";
-import { ThreeEvent, useFrame } from "@react-three/fiber";
-import THREE, { Uniform, Vector2 } from "three";
+import fragmentShader from "./shaders/fragment/frag_color.glsl?raw";
+import { useFrame } from "@react-three/fiber";
 
-export const Experience = () => {
-  const mesh = useRef<THREE.Mesh>(null);
+import { Color, ShaderMaterial, Mesh } from "three";
+
+const MovingPlane = () => {
+  // This reference will give us direct access to the mesh
+  const mesh = useRef<Mesh>(null);
 
   const uniforms = useMemo(
     () => ({
       u_time: {
         value: 0.0,
       },
-      // u_resolution: new Uniform(new Vector2(100, 100)),
-      u_mouse: new Uniform(new Vector2(0, 0)),
+      u_colorA: { value: new Color("#FFE486") },
+      u_colorB: { value: new Color("#FEB3D9") },
     }),
     []
   );
 
   useFrame((state) => {
     const { clock } = state;
-    (mesh.current!.material as THREE.ShaderMaterial).uniforms.u_time.value =
+    (mesh.current!.material as ShaderMaterial).uniforms.u_time.value =
       clock.getElapsedTime();
   });
 
-  const getCursor = (event: ThreeEvent<PointerEvent>) => {
-    (mesh.current!.material as THREE.ShaderMaterial).uniforms.u_mouse =
-      new Uniform(new Vector2(event.uv!.x, event.uv!.y));
-  };
+  return (
+    <mesh
+      ref={mesh}
+      position={[0, 0, 0]}
+      rotation={[-Math.PI / 2, 0, 0]}
+      scale={1.5}
+    >
+      {/* <icosahedronGeometry args={[1, 6]} /> */}
+      <planeGeometry args={[1, 1, 16, 16]} />
+      <shaderMaterial
+        fragmentShader={fragmentShader}
+        vertexShader={vertexShader}
+        uniforms={uniforms}
+        wireframe={true}
+      />
+    </mesh>
+  );
+};
 
+const Scene = () => {};
+
+export const Experience = () => {
   return (
     <>
       <OrbitControls />
-      <ambientLight />
-      <mesh
-        ref={mesh}
-        position={[0, 0, 0]}
-        rotation={[0, 0, 0]}
-        scale={1}
-        onPointerMove={getCursor}
-      >
-        <icosahedronGeometry args={[1, 3]} />
-        {/* <planeGeometry args={[1, 1, 32, 32]} /> */}
-        <shaderMaterial
-          fragmentShader={fragmentShader}
-          vertexShader={vertexShader}
-          wireframe={true}
-          uniforms={uniforms}
-          wireframeLinewidth={3}
-        />
-      </mesh>
+      <MovingPlane />
     </>
   );
 };
