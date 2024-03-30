@@ -10,7 +10,7 @@ const Tiles = ({ mapSize }: { mapSize: number }) => {
       return heightArray.map((heightPosition: number) => {
         return (
           <Tile
-            coordinates={{ x: widthPosition, y: heightPosition }}
+            coordinates={{ x: widthPosition, z: heightPosition }}
             key={`${widthPosition}_${heightPosition}`}
           />
         );
