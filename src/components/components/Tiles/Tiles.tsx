@@ -1,9 +1,8 @@
-import { OrbitControls } from "@react-three/drei";
 import React, { useMemo } from "react";
 import Tile from "./components/Tile";
-const MAP_SIZE = 5;
 
 const Tiles = ({ mapSize }: { mapSize: number }) => {
+  const offset = -mapSize / 2 + 0.5;
   const tileMap = useMemo(() => {
     const widthArray = [...Array(mapSize).keys()];
     const heightArray = [...Array(mapSize).keys()];
@@ -14,7 +13,7 @@ const Tiles = ({ mapSize }: { mapSize: number }) => {
       });
     });
   }, []);
-  return <mesh>{tileMap}</mesh>;
+  return <mesh position={[offset, 0, offset]}>{tileMap}</mesh>;
 };
 
 export default Tiles;

@@ -1,7 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import React from "react";
 import Tiles from "./components/Tiles";
-const MAP_SIZE = 5;
+const MAP_SIZE = 8;
 
 export const Experience = () => {
   return (
