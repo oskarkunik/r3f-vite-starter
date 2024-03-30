@@ -1,14 +1,15 @@
-import { OrbitControls } from "@react-three/drei";
 import React from "react";
 import Tiles from "./components/Tiles";
+import Player from "./components/Player";
 const MAP_SIZE = 8;
 
 export const Experience = () => {
+  const offset = -MAP_SIZE / 2 + 0.5;
+
   return (
-    <>
-      <OrbitControls />
+    <group position={[offset, 0, offset]}>
       <Tiles mapSize={MAP_SIZE} />
-      <axesHelper />
-    </>
+      <Player />
+    </group>
   );
 };
