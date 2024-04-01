@@ -8,6 +8,7 @@ export const Experience = () => {
 
   return (
     <group position={[offset, 0, offset]}>
+      <ambientLight />
       <Tiles mapSize={MAP_SIZE} />
       <Player />
     </group>
