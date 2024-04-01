@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import usePlayerStore, { PlayerState } from "@/store/usePlayerStore";
+import usePlayerStore, {
+  PlayerState,
+} from "../../../../../store/usePlayerStore";
+import { Color } from "@react-three/fiber";
 
 const COLORS = {
   DEFAULT: "#3c3e4d",
   ACTIVE: "#ffffff",
 };
 
-const Tile = ({ coordinates }: { coordinates: { x: number; y: number } }) => {
+const Tile = ({ coordinates }: { coordinates: { x: number; z: number } }) => {
   const { x, z } = coordinates;
-  const [color, setColor] = useState(COLORS.DEFAULT);
+  const [color, setColor] = useState<Color>(COLORS.DEFAULT);
   const movePlayer = usePlayerStore(
     (state) => (state as PlayerState).movePlayer
   );
@@ -27,7 +30,7 @@ const Tile = ({ coordinates }: { coordinates: { x: number; y: number } }) => {
         position={[x, 0, z]}
       >
         <planeGeometry args={[0.95, 0.95]} />
-        <meshBasicMaterial color={color} />
+        <meshBasicMaterial color={color as Color} />
       </mesh>
     </>
   );

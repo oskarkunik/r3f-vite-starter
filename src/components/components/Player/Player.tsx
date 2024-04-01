@@ -1,5 +1,5 @@
 import React from "react";
-import usePlayerStore, { PlayerState } from "@/store/usePlayerStore";
+import usePlayerStore, { PlayerState } from "../../../store/usePlayerStore";
 
 const Player = () => {
   const { x, z } = usePlayerStore(
