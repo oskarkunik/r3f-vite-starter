@@ -1,8 +1,10 @@
-import usePlayerStore, { PlayerState } from "../../../store/usePlayerStore";
-import { Group } from "three";
+import usePlayerStore, {
+  Move,
+  PlayerState,
+} from "../../../store/usePlayerStore";
 import useMovement from "../../../hooks/useMovement";
 import * as THREE from "three";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { PlayerAnimation } from "./Player_model.interface";
@@ -35,28 +37,30 @@ const Player = () => {
     coordinates,
     animation: { name, previousName, length },
     playAnimation,
+    currentMove,
+    moves,
+    currentDirection,
   } = usePlayerStore((state) => state as PlayerState);
 
   const player = useRef<THREE.Group>(null);
-
-  useMovement(player, coordinates, () => playAnimation("idle", 10));
 
   const { nodes, materials, animations } = useGLTF(
     "./models/Player_model.glb"
   ) as GLTFResult;
 
+  const selectedMove: Move | null = useMemo(() => {
+    const moveObject = moves.find(({ id }) => id === currentMove);
+    if (!moveObject) {
+      console.log(`Move: ${currentMove} doesn't exist`);
+      return null;
+    } else {
+      return moveObject;
+    }
+  }, [moves, currentMove]);
+
+  useMovement(player, selectedMove, currentDirection, animations);
   const { actions } = useAnimations(animations, player);
 
-  useEffect(() => {
-    if (!actions) {
-      return;
-    }
-    if (previousName && name !== previousName) {
-      actions[previousName]?.fadeOut(0.1);
-    }
-    actions[name]?.reset();
-    actions[name]?.play();
-  }, [name, previousName]);
   return (
     <group ref={player} dispose={null}>
       <group name="Scene">
