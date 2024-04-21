@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 
-
 const Player = () => {
   const player = useRef<THREE.Group>(null);
 

@@ -1,8 +1,7 @@
-import React from "react";
 import Player from "./components/Player";
+import React from "react";
 
 export const Experience = () => {
-
   return (
     <group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-4, 0, 0]}>
