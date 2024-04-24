@@ -1,5 +1,3 @@
-import React from "react";
-
 import PlayerField from './components/PlayerField';
 import EnemyField from './components/EnemyField';
 

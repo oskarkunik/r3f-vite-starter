@@ -1,4 +1,3 @@
-import React from "react";
 import Enemy from './components/Enemy';
 
 const PlayerField = () => {
