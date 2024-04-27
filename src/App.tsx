@@ -4,14 +4,15 @@ import { OrbitControls } from "@react-three/drei";
 import { BottomBar } from './components/UI';
 import "./styles/constants.scss";
 import "./styles/layout.scss";
+import OrbitControlsCustom from './components/OrbitControlsCustom';
 
 function App() {
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
-        position: 'absolute',
+        width: "100vw",
+        height: "100vh",
+        position: "absolute",
         top: 0,
         left: 0,
       }}
@@ -20,7 +21,7 @@ function App() {
         <color attach="background" args={["#1c1e28"]} />
         <BottomBar />
         <Experience />
-        <OrbitControls />
+        <OrbitControlsCustom />
         <axesHelper />
       </Canvas>
     </div>
