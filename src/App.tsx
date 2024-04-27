@@ -1,6 +1,5 @@
 import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience/Experience";
-import { OrbitControls } from "@react-three/drei";
 import { BottomBar } from './components/UI';
 import "./styles/constants.scss";
 import "./styles/layout.scss";

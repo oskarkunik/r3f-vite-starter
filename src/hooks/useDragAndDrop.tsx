@@ -3,7 +3,6 @@ import useGlobalUIState, { GlobalUIState } from '@/store/useGlobalUiState';
 
 const useDragAndDrop = () => {
   const setIsDragging = useGlobalUIState((state) => (state as GlobalUIState).setIsDragging)
-
     /**
      * Set to ondragover in drop slots
      */
@@ -17,9 +16,9 @@ const useDragAndDrop = () => {
     const onDrag: DragEventHandler<HTMLDivElement> = (event): void => {
       const name = (event!.target as HTMLElement).getAttribute('data-name');
       if (name) {
+
           setIsDragging(true);
           (event.dataTransfer!).setData("text", name);
-          event.target.style.left = '200px'
       }
 
     }
