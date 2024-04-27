@@ -1,0 +1,31 @@
+:root {
+  /* general */
+  --ui-border-width: 2px;
+  --ui-border-width-thin: 1px;
+  --ui-background-color: 0, 0, 0;
+  --ui-background-opacity: 1;
+  --ui-foreground-color: 255, 255, 255;
+  --ui-foreground-opacity: 1;
+
+  /* colors */
+  --ui-error: var(--ui-background-color);
+  --ui-success: var(--ui-foreground-color);
+
+  --ui-background: rgba(var(--ui-background-color), var(--ui-background-opacity));
+  --ui-foreground: rgba(var(--ui-foreground-color), var(--ui-foreground-opacity));
+
+  /* icons */
+  --ui-icon-size: 50px;
+  --ui-icon-slot-padding: 4px;
+  --ui-icon-slot-size: calc(var(--ui-icon-size) + 2 * var(--ui-icon-slot-padding));
+
+  /* borders */
+  --ui-border: var(--ui-border-width) solid rgba(var(--ui-background-color), var(--ui-background-opacity));
+  --ui-border-light: var(--ui-border-width-thin) solid rgba(var(--ui-foreground-color), var(--ui-foreground-opacity));
+
+  /* notifications */
+  --ui-notification-background-color: var(--ui-background-color);
+  --ui-notification-opacity: 0.8;
+  --ui-notification-background: rgba(var(--ui-notification-background-color), var(--ui-notification-opacity));
+  --ui-notification-blur: 10px;
+}

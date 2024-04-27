@@ -1,12 +1,12 @@
 .layout-bottom-bar {
   position: absolute;
-  bottom: 0;
-  height: 50px;
-  width: 100vw;
-  border-top: var(--ui-border-light);
+    bottom: 0;
+    height: 50px;
+    width: 100vw;
+    border-top: var(--ui-border-light);
 
-  &-wrapper {
-    left: -50% !important;
-    top: 50% !important;
-  }
+    &-wrapper {
+      left: -50% !important;
+      top: 50% !important;
+    }
 }

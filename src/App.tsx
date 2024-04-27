@@ -2,16 +2,28 @@ import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience/Experience";
 import { OrbitControls } from "@react-three/drei";
 import { BottomBar } from './components/UI';
+import "./styles/constants.scss";
+import "./styles/layout.scss";
 
 function App() {
   return (
-    <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
-      <color attach="background" args={["#1c1e28"]} />
-      <BottomBar />
-      <Experience />
-      <OrbitControls />
-      <axesHelper />
-    </Canvas>
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+      }}
+    >
+      <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
+        <color attach="background" args={["#1c1e28"]} />
+        <BottomBar />
+        <Experience />
+        <OrbitControls />
+        <axesHelper />
+      </Canvas>
+    </div>
   );
 }
 

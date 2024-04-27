@@ -1,0 +1,30 @@
+* {
+  user-select: none;
+}
+
+.dark-blur {
+  background-color: var(--ui-notification-background);
+  backdrop-filter: blur(var(--ui-notification-blur));
+}
+
+.layout-top-bar {
+  border-bottom: var(--ui-border-light);
+}
+
+.bar {
+  min-height: 50px;
+  height: 2%;
+  max-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventory-container {
+  border: var(--ui-border-light);
+  margin-bottom: 50px;
+  width: 200px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+}
