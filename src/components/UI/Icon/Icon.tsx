@@ -77,7 +77,7 @@ const Icon = ({
     <div
       ref={iconRef}
       className={`icon ${additionalClassName}`}
-      onDoubleClick={onCustomDragStart}
+      onClick={onCustomDragStart}
       onAuxClick={(e) => onCustomDragEnd(e)}
       data-name={icon}
       style={{
