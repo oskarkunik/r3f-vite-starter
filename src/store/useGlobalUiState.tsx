@@ -1,25 +1,15 @@
 import { create } from 'zustand';
+import { InventoryItem } from '../@types/Inventory';
 
 export interface GlobalUIState {
-  isOverDraggableElement: boolean;
-  setIsOverDraggableElement: (isOverDraggableElement: boolean) => void;
-  isDragging: boolean;
-  setIsDragging: (isDragging: boolean) => void;
-  openElementIds: number[];
-  setOpenElementIds: (ids: number | number[]) => void;
+  draggedElementType: InventoryItem["type"] | null;
+  setDraggedElementType: (type: InventoryItem['type'] | null) => void;
 };
 
-const useGlobalUIState = create(set => ({
-  isOverDraggableElement: false,
-  setIsOverDraggableElement: (isOverDraggableElement: boolean) => set((state: GlobalUIState) => ({...state, isOverDraggableElement })),
-  isDragging: false,
-  setIsDragging: (isDragging: boolean) => set((state: GlobalUIState) => ({ ...state, isDragging })),
-  openElementIds: [],
-  setOpenElementIds: (ids: number | number[]) => set((state: GlobalUIState) => ({
-      ...state,
-      openElementIds: Array.isArray(ids) ? ids : [ids],
-    }),
-  ),
+const useGlobalUIState = create((set) => ({
+  draggedElementType: null,
+  setDraggedElementType: (draggedElementType: InventoryItem["type"] | null) =>
+    set((state: GlobalUIState) => ({ ...state, draggedElementType })),
 }));
 
 export default useGlobalUIState;

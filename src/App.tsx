@@ -3,7 +3,7 @@ import Experience from "./components/Experience/Experience";
 import { BottomBar } from './components/UI';
 import "./styles/constants.scss";
 import "./styles/layout.scss";
-import OrbitControlsCustom from './components/OrbitControlsCustom';
+import { OrbitControls } from '@react-three/drei';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <color attach="background" args={["#1c1e28"]} />
         <BottomBar />
         <Experience />
-        <OrbitControlsCustom />
+        <OrbitControls />
         <axesHelper />
       </Canvas>
     </div>

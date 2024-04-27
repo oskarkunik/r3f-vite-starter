@@ -3,11 +3,11 @@ import iconTest from '@/assets/icons/3d-select-edge.svg';
 import iconBattery from '@/assets/icons/battery-full.svg';
 import iconHome from '@/assets/icons/home-simple.svg';
 import iconShop from '@/assets/icons/small-shop.svg';
-import { InventoryItemIcon } from '@/@types/Inventory';
+import { InventoryItem, InventoryItemIcon } from '@/@types/Inventory';
 import { PlaceIcon } from '@/@types/Places';
-import useDragAndDrop from '@/hooks/useDragAndDrop';
 import useMousePosition from '/src/hooks/useMousePosition';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { BaseSyntheticEvent, useMemo, useRef, useState } from 'react';
+import useGlobalUIState, { GlobalUIState } from '/src/store/useGlobalUiState';
 
 
 const ICONS: Record<InventoryItemIcon | PlaceIcon, string> = {
@@ -22,13 +22,18 @@ const Icon = ({
   handleClick,
   additionalClassName,
   isDraggable,
+  type,
 }: {
   icon: PlaceIcon | InventoryItemIcon;
   handleClick?: () => void;
   additionalClassName?: string;
   isDraggable?: boolean;
+  type: InventoryItem["type"];
 }) => {
   const { x, y } = useMousePosition();
+  const setDraggedElementType = useGlobalUIState(
+    (state) => (state as GlobalUIState).setDraggedElementType
+  );
   // const {onDrag, onDragEnd} = useDragAndDrop();
   const iconRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -45,34 +50,41 @@ const Icon = ({
         y: y - parentY - ICON_OFFSET,
       };
     } else {
-      return ({
+      return {
         x: 0,
         y: 0,
-      })
+      };
     }
-  }, [iconRef.current, x, y])
+  }, [iconRef.current, x, y]);
 
+  const onCustomDragStart = () => {
+    if (isDragging) {
+      return;
+    }
+    setIsDragging(true);
+    setDraggedElementType(type);
+  }
 
-  useEffect(() => {
-    // console.log(x,y)
-  }, [x, y])
+  const onCustomDragEnd = (e: BaseSyntheticEvent) => {
+    if (!isDragging) {
+      return;
+    }
+    setIsDragging(false);
+    setDraggedElementType(null);
+  };
+
   return (
     <div
       ref={iconRef}
-      onClick={handleClick}
-      draggable={isDraggable}
       className={`icon ${additionalClassName}`}
-      // onDragStart={isDraggable ? onDrag : undefined}
-      // onDragEnd={onDragEnd}
-      onClickCapture={
-        isDragging ? () => setIsDragging(false) : () => setIsDragging(true)
-      }
-      // onMouseUpCapture={() => setIsDragging(false)}
+      onDoubleClick={onCustomDragStart}
+      onAuxClick={(e) => onCustomDragEnd(e)}
       data-name={icon}
       style={{
         left: isDragging ? `${calculatedX}px` : 0,
         top: isDragging ? `${calculatedY}px` : 0,
-        transform: isDragging ? `scale(2)` : 'scale(1)'
+        transform: isDragging ? `scale(2)` : "scale(1)",
+        cursor: isDragging ? 'grabbing' : 'pointer'
       }}
     >
       <img draggable="false" src={ICONS[icon]} />
