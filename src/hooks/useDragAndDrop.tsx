@@ -19,6 +19,7 @@ const useDragAndDrop = () => {
       if (name) {
           setIsDragging(true);
           (event.dataTransfer!).setData("text", name);
+          event.target.style.left = '200px'
       }
 
     }
