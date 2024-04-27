@@ -4,8 +4,8 @@ import EnemyField from './components/EnemyField';
 export const Experience = () => {
   return (
     <group>
-      <PlayerField />
-      <EnemyField />
+      {/* <PlayerField /> */}
+      {/* <EnemyField /> */}
       <ambientLight />
     </group>
   );
