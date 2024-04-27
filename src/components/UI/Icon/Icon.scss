@@ -1,0 +1,19 @@
+.icon {
+  width: var(--ui-icon-size);
+  height: var(--ui-icon-size);
+  cursor: pointer;
+  background: var(--ui-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.allowed-item-suggestion {
+    opacity: 0.2;
+    background: none;
+    cursor: default;
+  }
+
+  &.trigger-icon {
+    border-radius: 100%;
+  }
+}

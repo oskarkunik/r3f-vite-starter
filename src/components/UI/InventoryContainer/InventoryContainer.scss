@@ -1,0 +1,19 @@
+.inventory-container {
+  border: var(--ui-border-light);
+  margin-bottom: 50px;
+  width: 200px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+
+  .item {
+    position: relative;
+    .item-count {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: rgba(var(--ui-foreground-color), var(--ui-foreground-opacity));
+      padding: 2px;
+    }
+  }
+}

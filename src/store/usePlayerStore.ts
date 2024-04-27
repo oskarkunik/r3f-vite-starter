@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { PlayerAnimation } from '../components/components/Player/Player_model.interface';
 
 type Coordinates = { x: number, z: number }
 
@@ -21,13 +20,7 @@ export type Move = {
 export interface PlayerState {
   coordinates: Coordinates;
   rotation: 0;
-  animation: {
-    name: PlayerAnimation;
-    previousName: PlayerAnimation | null;
-    length: number;
-  };
   movePlayer: (newCoordinates: Coordinates) => void;
-  playAnimation: (animationName: PlayerAnimation, animationLength: number) => void;
   moves: Move[];
   currentMove: Move['id'];
   currentDirection: Direction;
@@ -83,18 +76,6 @@ const usePlayerStore = create(set => ({
       return {
         ...state,
         coordinates: newCoordinates,
-      };
-    }),
-  playAnimation: (animationName: PlayerAnimation, animationLength: number) =>
-    set((state: PlayerState) => {
-      return {
-        ...state,
-        animation: {
-          ...state.animation,
-          length: animationLength,
-          previousName: state.animation.name,
-          name: animationName
-        },
       };
     }),
 }));
