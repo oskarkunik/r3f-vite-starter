@@ -41,10 +41,6 @@ export const GameEngineProvider = ({children}) => {
     actionSuccess,
   }
 
-  const phaseEnd = () => {
-    console.log('phase end!');
-  }
-
   const distributeCards = (nbCards) => {
     const newDeck = [...getState('deck')];
     players.forEach((player) => {
@@ -90,6 +86,98 @@ export const GameEngineProvider = ({children}) => {
     setPhase('lobby', true);
     onPlayerJoin(startGame);
   }, [])
+
+  const removePlayerCard = () => {
+    const player = players[getState('playerTurn')];
+    const cards = player.getState('cards');
+    const selectedCard = player.getState('selectedCard');
+    cards.splice(selectedCard, 1);
+    player.setState('cards', cards, true);
+  }
+
+  const getCard = () => {
+    const player = players[getState('playerTurn')];
+    if (!player) {
+      return '';
+    }
+    const cards = player.getState('cards');
+    if (!cards) {
+      return '';
+    }
+    const selectedCard = player.getState('selectedCard');
+    return cards[selectedCard];
+  }
+
+
+  const phaseEnd = () => {
+    let newTime = 0;
+    switch (getState('phase')) {
+      case 'cards':
+        if (getCard() === 'punch') {
+          setPhase('playerChoice', true);
+          newTime = TIME_PHASE_PLAYER_CHOICE;
+        } else {
+          performPlayerAction();
+          setPhase('playerAction', true);
+          newTime = TIME_PHASE_PLAYER_ACTION;
+        }
+        break;
+      case 'playerChoice':
+        performPlayerAction();
+        setPhase('playerAction', true);
+        newTime = TIME_PHASE_PLAYER_ACTION;
+        break;
+      case 'playerAction':
+        removePlayerCard();
+        const newPlayerTurn = (getState('playerTurn') + 1) % players.length;
+
+        if (newPlayerTurn === getState('playerStart')) {
+          if (getState('round') === NB_ROUNDS) {
+            console.log('End of game');
+            let maxGems = players.sort((a,b) => a.getState('gems') < b.getState('gems'))[0].getState('gems');
+            players.forEach((player) => {
+              player.setState(
+                'winner',
+                player.getState('gems') === maxGems,
+                true,
+              );
+              player.setState('cards', [], true);
+            })
+            setPhase('end', true);
+          } else {
+            console.log('Next round');
+            const newPlayerStart = (getState('playerStart') + 1) % players.length;
+            setPlayerStart(newPlayerStart, true);
+            setPlayerTurn(newPlayerStart, true);
+            setRound(getState('round') + 1, true);
+            distributeCards(1);
+            setPhase('cards', true);
+            newTime = TIME_PHASE_CARDS;
+          }
+        } else {
+          console.log('Next player');
+          setPlayerTurn(newPlayerTurn, true);
+          if (getCard() === 'punch') {
+            setPhase('playerChoice', true);
+            newTime = TIME_PHASE_PLAYER_CHOICE;
+          } else {
+            performPlayerAction();
+            setPhase('playerAction', true);
+          }
+        }
+        break;
+      default:
+        break;
+    }
+    setTimer(newTime);
+  }
+
+  const p = [
+    { gems: 2 },
+    { gems: 7 },
+    { gems: 1 },
+  ]
+
 
   const { paused } = useControls({
     paused: false,
