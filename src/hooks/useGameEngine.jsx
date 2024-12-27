@@ -87,6 +87,56 @@ export const GameEngineProvider = ({children}) => {
     onPlayerJoin(startGame);
   }, [])
 
+  const performPlayerAction = () => {
+    const player = players[getState('playerTurn')];
+    console.log('Perform player action', player.id);
+    const selectedCard = player.getState('selectedCard');
+    const cards = player.getState('cards');
+    const card = cards[selectedCard];
+    let success = true;
+    if (card !== 'shield') {
+      player.setState('shield', false, true);
+    }
+    switch (card) {
+      case 'punch':
+        let target = players[player.getState('playerTarget')];
+        if (!target) {
+          let targetIndex = (getState('playerTurn') + 1) % players.length;
+          player.setState('playerTarget', targetIndex, true);
+        }
+        console.log('Punch target', target.id);
+        if (target.getState('shield')) {
+          console.log('Target is shielded');
+          success = false;
+          break;
+        }
+        if (target.getState('gems') > 0) {
+          target.setState('gems', target.getState('gems') - 1, true);
+          setGems(getState('gems') + 1, true);
+          console.log('Target lost gems');
+        }
+        break;
+      case 'grab':
+        if (getState('gems') > 0) {
+          player.setState('gems', player.getState('gems') + 1, true);
+          setGems(getState('gems') - 1, true);
+          console.log('Grabbed gem');
+        } else {
+          console.log('No gems available');
+          success = false;
+        }
+        break;
+      case 'shield':
+        console.log('Shield');
+        player.setState('shield', true, true);
+        break;
+      default:
+        break;
+    }
+    setActionSuccess(success, true);
+
+  }
+
   const removePlayerCard = () => {
     const player = players[getState('playerTurn')];
     const cards = player.getState('cards');
