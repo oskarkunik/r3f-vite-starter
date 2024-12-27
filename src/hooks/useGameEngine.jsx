@@ -1,6 +1,6 @@
 import { useControls } from 'leva';
 import { isHost, onPlayerJoin, useMultiplayerState, usePlayersList, getState } from 'playroomkit';
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { randInt } from 'three/src/math/MathUtils.js';
 
 const GameEngineContext = createContext();
@@ -41,6 +41,10 @@ export const GameEngineProvider = ({children}) => {
     actionSuccess,
   }
 
+  const phaseEnd = () => {
+    console.log('phase end!');
+  }
+
   const distributeCards = (nbCards) => {
     const newDeck = [...getState('deck')];
     players.forEach((player) => {
@@ -58,7 +62,7 @@ export const GameEngineProvider = ({children}) => {
   }
 
   const startGame = () => {
-    if (isHost()) {
+    if (isHost() && getState('phase') === 'lobby') {
       console.log('Start game');
       setTimer(TIME_PHASE_CARDS, true);
       const randomPlayer = randInt(0, players.length - 1);
@@ -83,13 +87,44 @@ export const GameEngineProvider = ({children}) => {
   }
 
   useEffect(() => {
-    startGame();
+    setPhase('lobby', true);
     onPlayerJoin(startGame);
   }, [])
 
   const { paused } = useControls({
     paused: false,
   });
+
+  const timerInterval = useRef();
+
+  const runTimer = () => {
+    timerInterval.current = setInterval(() => {
+      if (!isHost()) {
+        return;
+      }
+      if (paused) {
+        return;
+      }
+      let newTime = getState('timer') - 1;
+      console.log('Timer', newTime);
+
+      if (newTime <= 0) {
+        phaseEnd();
+      } else {
+        setTimer(newTime, true);
+      }
+
+    }, 1000);
+  }
+
+  const clearTimer = () => {
+    clearInterval(timerInterval.current);
+  }
+
+  useEffect(() => {
+    runTimer();
+    return clearTimer;
+  }, [phase, paused])
 
   return (
     <GameEngineContext.Provider value={{
