@@ -1,4 +1,4 @@
-import { myPlayer } from 'playroomkit';
+import { myPlayer, isHost } from 'playroomkit';
 import { NB_ROUNDS, useGameEngine } from '../hooks/useGameEngine';
 
 export const UI = () => {
@@ -70,6 +70,33 @@ export const UI = () => {
         </div>
       </div>
       <div className='flex-1' />
+      <div className="p-4 w-full">
+        <h1 className="text-2xl font-bold text-center">{label}</h1>
+
+        {
+          phase === 'end' && (
+            <p className="text-center">
+              Winner:{' '}
+              {
+                players
+                  .filter((player) => player.getState('winner'))
+                  .map((player) => player.state.profile.name)
+                  .join(', ')
+              }
+              !
+            </p>
+          )}
+          {
+            isHost() && phase === 'end' && (
+              <button
+                className="mt-2 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={startGame}
+              >
+                Play again
+              </button>
+            )
+          }
+      </div>
     </div>
   );
 }
