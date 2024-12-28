@@ -266,7 +266,9 @@ export const GameEngineProvider = ({children}) => {
 
   return (
     <GameEngineContext.Provider value={{
-      ...gameState
+      ...gameState,
+      startGame,
+      getCard,
     }}>
       {children}
     </GameEngineContext.Provider>
