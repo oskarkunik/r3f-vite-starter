@@ -1,16 +1,14 @@
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
-import { useControls } from "leva";
 import React from "react";
 import { Environment } from "@react-three/drei";
 
 function App() {
-  const { exampleValue } = useControls({ exampleValue: "#242424" });
 
   return (
     <Canvas shadows camera={{ position: [3, 3, 3], fov: 30 }}>
       <Environment preset="forest" />
-      <color attach="background" args={[exampleValue]} />
+      <color attach="background" args={["#242424"]} />
       <Experience />
     </Canvas>
   );
