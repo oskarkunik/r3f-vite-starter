@@ -7,11 +7,11 @@ import { useGLTF } from "@react-three/drei";
 import { Mesh, MeshStandardMaterial } from 'three';
 
 const cardMaterial = new MeshStandardMaterial({
-  color: '#000',
+  color: 'white',
 });
 
 const imageMaterial = new MeshStandardMaterial({
-  color: "pink",
+  color: "teal",
 });
 
 
@@ -19,7 +19,7 @@ export default function CardFront(props) {
   const { nodes } = useGLTF("/src/assets/objects/card-straight-front.glb");
   return (
     <group {...props} dispose={null}>
-      <group position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+      <group position={[0, 0, 0]} rotation={[0, 0, 0]}>
         <mesh
           castShadow
           receiveShadow
