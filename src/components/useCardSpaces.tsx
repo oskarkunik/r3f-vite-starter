@@ -31,6 +31,7 @@ const useCardSpaces = ({
         const left = -(j + 1) * width;
         return (
           <CardSpace
+            key={`space_${i + 1}_${j + 1}`}
             position={[top, 0, left]}
             scale={[height, width]}
             onClick={() =>
