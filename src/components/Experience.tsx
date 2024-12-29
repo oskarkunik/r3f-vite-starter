@@ -26,12 +26,14 @@ export const Experience = () => {
 
   const onSpaceClick = ({
     row,
-    column
+    column,
+    position,
   }: {
     row: number,
-    column: number
+    column: number,
+    position: [number, number]
   }) => {
-    console.log(row, column)
+    console.log(row, column, position)
   }
 
   const cardSpaces = useCardSpaces({rows: CONFIG.rows, columns: CONFIG.columns, height: CARD_SPACE.height, width: CARD_SPACE.width, onSpaceClick});
