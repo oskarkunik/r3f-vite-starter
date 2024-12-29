@@ -24,7 +24,17 @@ export const Experience = () => {
     column: column
   }]
 
-  const cardSpaces = useCardSpaces({rows: CONFIG.rows, columns: CONFIG.columns, height: CARD_SPACE.height, width: CARD_SPACE.width});
+  const onSpaceClick = ({
+    row,
+    column
+  }: {
+    row: number,
+    column: number
+  }) => {
+    console.log(row, column)
+  }
+
+  const cardSpaces = useCardSpaces({rows: CONFIG.rows, columns: CONFIG.columns, height: CARD_SPACE.height, width: CARD_SPACE.width, onSpaceClick});
 
   return (
     <>
