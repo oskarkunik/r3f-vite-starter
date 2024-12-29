@@ -14,7 +14,7 @@ const useCardSpaces = ({
   width: number;
   onSpaceClick: ({
     row,
-    column
+    column,
   }: {
     row: number,
     column: number
@@ -24,18 +24,19 @@ const useCardSpaces = ({
     const rowArrays = new Array(rows).fill([]);
 
     const spacesTable = rowArrays.map((_, i) => {
-      const columnPositions = new Array(columns).fill(null).map((_, j) => (
-        <CardSpace
-          position={[(i + 1) * height, 0, -(j + 1) * width]}
-          scale={[height, width]}
-          onClick={() =>
-            onSpaceClick({
-              row: i + 1,
-              column: j + 1,
-            })
-          }
-        />
-      ));
+      const columnPositions = new Array(columns).fill(null).map((_, j) => {
+        return (
+          <CardSpace
+            position={[(i + 1) * height, 0, -(j + 1) * width]}
+            scale={[height, width]}
+            onClick={() =>
+              onSpaceClick({
+                row: i + 1,
+                column: j + 1,
+              })
+            }
+          />
+        )});
 
       return columnPositions;
     });
