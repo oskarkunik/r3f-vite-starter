@@ -1,7 +1,7 @@
 import { CONFIG } from '../constants';
 
 const boardOffsetLeft = () =>
-  (-1 * CONFIG.BOARD.COLUMNS * CONFIG.CARD_SPACE.WIDTH) / 2 +
+  (CONFIG.BOARD.COLUMNS * CONFIG.CARD_SPACE.WIDTH) / 2 -
   CONFIG.CARD_SPACE.WIDTH / 2;
 
 

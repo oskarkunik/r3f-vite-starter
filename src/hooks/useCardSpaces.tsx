@@ -27,7 +27,7 @@ const useCardSpaces = ({
           id: `${row}_${column}`,
           row,
           column,
-          position: [top, left] as [number, number],
+          position: [top, -left] as [number, number],
           isPlayer: row > enemyRows
         };
       });
