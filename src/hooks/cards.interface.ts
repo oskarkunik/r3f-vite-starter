@@ -15,7 +15,9 @@ export type CardProperties = {
   }
 }
 
+export type CardID = string;
+
 export type CardPosition = SpacePosition & {
   name: string;
-  id: string;
+  id: CardID;
 } & CardProperties;

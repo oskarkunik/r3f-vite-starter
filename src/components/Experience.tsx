@@ -1,5 +1,4 @@
 import { OrbitControls } from "@react-three/drei";
-import { useControls } from "leva";
 
 import React from "react";
 import CardFront from './CardFront';
@@ -11,7 +10,7 @@ import { CONFIG } from '../constants';
 import { boardOffsetLeft, boardOffsetTop } from '../util/helpers';
 
 export const Experience = () => {
-  const { cardName } = useControls({ cardName: 'Test' });
+
 
   const { cardPositions, cardSpaces, onSpaceClick } = useGameState();
 
@@ -32,13 +31,7 @@ export const Experience = () => {
               key={`${top}_${left}`}
               position={[left, 0, top]}
               scale={[1, 1, 1]}
-              onClick={() =>
-                onSpaceClick({
-                  ...cardSpace,
-                  name: cardName,
-                  id: "wodzionka",
-                })
-              }
+              onClick={() => onSpaceClick(cardSpace)}
             />
           );
         })}

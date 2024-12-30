@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 import useCardSpaces from './useCardSpaces';
 import { BoardPosition, CardPosition, SpacePosition } from './cards.interface';
+import { button, useControls } from "leva";
 
 import { CONFIG } from '../constants';
 
@@ -8,12 +9,29 @@ const GameStateContext = createContext<
   | {
       cardPositions: CardPosition[];
       cardSpaces: SpacePosition[];
-      onSpaceClick: (position: CardPosition) => void;
+      onSpaceClick: (position: SpacePosition) => void;
     }
   | undefined
 >(undefined);
 
 const GameStateProvider = (({children}) => {
+  const { playerCardId } = useControls("Player", {
+    playerCardId: {
+      value: "foo",
+      options: ["foo", "bar", "baz"],
+    },
+  });
+
+  const { enemyCards } = useControls("Enemy", {
+    enemyCards: {
+      value: CONFIG.BOARD.COLUMNS * CONFIG.BOARD.ENEMY_ROWS,
+      step: 1,
+      min: 0,
+      max: CONFIG.BOARD.COLUMNS * CONFIG.BOARD.ENEMY_ROWS,
+    },
+    addEnemyCards: button((get) => alert(get("enemyCards"))),
+  });
+
   const [cardPositions, setCardPositions] = useState<
     CardPosition[]
   >([]);
@@ -26,7 +44,7 @@ const GameStateProvider = (({children}) => {
     enemyRows: CONFIG.BOARD.ENEMY_ROWS
   })
 
-  const onSpaceClick = (position: CardPosition) => {
+  const onSpaceClick = (position: SpacePosition) => {
     const {row, column} = position;
     if (
       cardPositions.some(
@@ -41,7 +59,12 @@ const GameStateProvider = (({children}) => {
         )
       );
     } else {
-      setCardPositions((current) => [...current, position]);
+      const newCard = {
+        ...position,
+        name: playerCardId,
+        id: playerCardId,
+      }
+      setCardPositions((current) => [...current, newCard]);
     }
   };
 

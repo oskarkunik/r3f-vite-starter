@@ -30,7 +30,7 @@ const CardFront = ({
   isPlayer: boolean,
   name: string,
 }) => {
-  const { fontsize, positionX } = useControls({ fontsize: 0.1, positionX: 1 });
+  const { fontsize, positionX } = useControls('Card Front', { fontsize: 0.1, positionX: 1 });
 
   const texture = useTexture('/src/assets/images/single_rune.png');
   texture.repeat.set(1.5,1.5);
