@@ -25,24 +25,26 @@ export const Experience = () => {
       <group position={[boardOffsetTop(), 0.01, boardOffsetLeft()]}>
         {cardSpaces.map((cardSpace) => {
           const {
-            id,
             position: [left, top],
           } = cardSpace;
           return (
             <CardSpace
-              key={id}
+              key={`${top}_${left}`}
               position={[left, 0, top]}
               scale={[1, 1, 1]}
-              onClick={() => onSpaceClick({
-                ...cardSpace,
-                name: cardName
-              })}
+              onClick={() =>
+                onSpaceClick({
+                  ...cardSpace,
+                  name: cardName,
+                  id: "wodzionka",
+                })
+              }
             />
           );
         })}
         {cardPositions.map(({ position: [left, top], id, isPlayer, name }) => (
           <CardFront
-            key={id}
+            key={`${top}_${left}`}
             position={[left, CONFIG.CARD.OFFSET_TOP, top]}
             cardScale={[CONFIG.CARD.BOARD_SCALE, 1, CONFIG.CARD.BOARD_SCALE]}
             isPlayer={isPlayer}

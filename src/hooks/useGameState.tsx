@@ -27,13 +27,21 @@ const GameStateProvider = (({children}) => {
   })
 
   const onSpaceClick = (position: CardPosition) => {
-    if (cardPositions.some(({ id }) => id === position.id)) {
-      setCardPositions((current) => current.filter(({ id }) => id !== position.id));
+    const {row, column} = position;
+    if (
+      cardPositions.some(
+        ({ row: existingRow, column: existingColumn }) =>
+          existingRow === row && existingColumn === column
+      )
+    ) {
+      setCardPositions((current) =>
+        current.filter(
+          ({ row: existingRow, column: existingColumn }) =>
+            !(existingRow === row && existingColumn === column)
+        )
+      );
     } else {
-      setCardPositions((current) => [
-        ...current,
-        position,
-      ]);
+      setCardPositions((current) => [...current, position]);
     }
   };
 

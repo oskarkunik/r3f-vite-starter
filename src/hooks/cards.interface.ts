@@ -1,14 +1,21 @@
 export type BoardPosition = {
-  id: string;
   row: number;
   column: number;
   position: [number, number];
 }
 
 export type SpacePosition = BoardPosition & {
-  isPlayer: boolean,
+  isPlayer: boolean;
+}
+
+export type CardProperties = {
+  properties?: {
+    power: number;
+    health: number;
+  }
 }
 
 export type CardPosition = SpacePosition & {
-  name: string,
-}
+  name: string;
+  id: string;
+} & CardProperties;
