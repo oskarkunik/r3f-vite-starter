@@ -1,16 +1,78 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-const GameStateContext = createContext({});
+const CONFIG = {
+  BOARD: {
+    ROWS: 2,
+    COLUMNS: 4,
+  },
+  CARD_SPACE: {
+    HEIGHT: 3.4,
+    WIDTH: 2,
+  },
+};
+
+type CardPosition = {
+  id: string;
+  row: number;
+  column: number;
+  position: [number, number];
+}
+
+const GameStateContext = createContext<
+  | {
+      cardPositions: CardPosition[];
+      onSpaceClick: ({
+        row,
+        column,
+        position,
+      }: {
+        row: number;
+        column: number;
+        position: [number, number];
+      }) => void;
+    }
+  | undefined
+>(undefined);
 
 const GameStateProvider = (({children}) => {
+  const [cardPositions, setCardPositions] = useState<
+    CardPosition[]
+  >([]);
+
+  const onSpaceClick = ({
+    row,
+    column,
+    position,
+  }: {
+    row: number;
+    column: number;
+    position: [number, number];
+  }) => {
+    const positionId = `${row}_${column}`;
+    if (cardPositions.some(({ id }) => id === positionId)) {
+      setCardPositions((current) => current.filter(({ id }) => id !== positionId));
+    } else {
+      setCardPositions((current) => [
+        ...current,
+        {
+          id: positionId,
+          row,
+          column,
+          position,
+        },
+      ]);
+    }
+  };
+
   const gameState = {
-    foo: true
+    cardPositions,
   };
 
   return (
     <GameStateContext.Provider
       value={{
         ...gameState,
+        onSpaceClick,
       }}
     >
       {children}

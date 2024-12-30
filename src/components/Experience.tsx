@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import CardFront from './CardFront';
 import Board from './Board';
 import useCardSpaces from './useCardSpaces';
+import { useGameState } from './useGameState';
 
 const CONFIG = {
   rows: 2,
@@ -19,37 +20,7 @@ const CARD_SPACE = {
 export const Experience = () => {
   const { row, column } = useControls({ row: 4, column: 4 });
 
-  const [cardPositions, setCardPositions] = useState<
-    {
-      id: string;
-      row: number;
-      column: number;
-      position: [number, number];
-    }[]
-  >([]);
-
-  const onSpaceClick = ({
-    row,
-    column,
-    position,
-  }: {
-    row: number,
-    column: number,
-    position: [number, number]
-  }) => {
-    const positionId = `${row}_${column}`;
-    if (cardPositions.some(({id}) => id === positionId)) {
-      setCardPositions(cardPositions.filter(({ id }) => id !== positionId)
-      );
-    } else {
-      setCardPositions([...cardPositions, {
-        id: positionId,
-        row,
-        column,
-        position
-      }])
-    }
-  }
+  const { cardPositions, onSpaceClick } = useGameState();
 
   useEffect(() => console.log(cardPositions), [cardPositions])
 
