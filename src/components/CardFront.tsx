@@ -11,22 +11,23 @@ const cardMaterial = new MeshStandardMaterial({
   color: 'white',
 });
 
-const imageMaterial = new MeshStandardMaterial({
-  color: "teal",
-});
-
 
 const CardFront = ({
   position,
   cardScale,
+  isPlayer
 }: {
   position: Vector3
   cardScale: Vector3,
+  isPlayer: boolean,
 }) => {
   const { nodes } = useGLTF("/src/assets/objects/card-straight-front.glb");
+  const imageMaterial = new MeshStandardMaterial({
+    color: isPlayer ? "teal" : "red",
+  });
   return (
     <group position={position} dispose={null}>
-      <group position={[0, 0, 0]} rotation={[0, 0, 0]} scale={cardScale}>
+      <group position={[0, 0, 0]} rotation={[0, isPlayer ? 0 : Math.PI, 0]} scale={cardScale}>
         <mesh
           castShadow
           receiveShadow

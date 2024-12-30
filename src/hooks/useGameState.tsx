@@ -1,30 +1,14 @@
 import React, { createContext, useContext, useState } from "react";
 import useCardSpaces from './useCardSpaces';
-import { CardPosition } from './cards.interface';
+import { BoardPosition, CardPosition, SpacePosition } from './cards.interface';
 
-const CONFIG = {
-  BOARD: {
-    ROWS: 2,
-    COLUMNS: 4,
-  },
-  CARD_SPACE: {
-    HEIGHT: 3.4,
-    WIDTH: 2,
-  },
-};
+import { CONFIG } from '../constants';
 
 const GameStateContext = createContext<
   | {
       cardPositions: CardPosition[];
-      onSpaceClick: ({
-        row,
-        column,
-        position,
-      }: {
-        row: number;
-        column: number;
-        position: [number, number];
-      }) => void;
+      cardSpaces: SpacePosition[];
+      onSpaceClick: (position: CardPosition) => void;
     }
   | undefined
 >(undefined);
@@ -39,34 +23,22 @@ const GameStateProvider = (({children}) => {
     columns: CONFIG.BOARD.COLUMNS,
     height: CONFIG.CARD_SPACE.HEIGHT,
     width: CONFIG.CARD_SPACE.WIDTH,
+    enemyRows: CONFIG.BOARD.ENEMY_ROWS
   })
 
-  const onSpaceClick = ({
-    row,
-    column,
-    position,
-  }: {
-    row: number;
-    column: number;
-    position: [number, number];
-  }) => {
-    const positionId = `${row}_${column}`;
-    if (cardPositions.some(({ id }) => id === positionId)) {
-      setCardPositions((current) => current.filter(({ id }) => id !== positionId));
+  const onSpaceClick = (position: CardPosition) => {
+    if (cardPositions.some(({ id }) => id === position.id)) {
+      setCardPositions((current) => current.filter(({ id }) => id !== position.id));
     } else {
       setCardPositions((current) => [
         ...current,
-        {
-          id: positionId,
-          row,
-          column,
-          position,
-        },
+        position,
       ]);
     }
   };
 
   const gameState = {
+    cardSpaces,
     cardPositions,
   };
 

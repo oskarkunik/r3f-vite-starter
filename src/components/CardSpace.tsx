@@ -1,5 +1,6 @@
 import { Vector3 } from '@react-three/fiber';
 import React from "react";
+import { CONFIG } from '../constants';
 
 const CardSpace = ({
   position,
@@ -7,7 +8,7 @@ const CardSpace = ({
   onClick: handleClick,
 }: {
   position: Vector3;
-  scale: [height: number, width: number];
+  scale: Vector3;
   onClick: () => void;
 }) => {
 
@@ -17,8 +18,8 @@ const CardSpace = ({
       rotation={[-Math.PI / 2, 0, 0]}
       onClick={handleClick}
     >
-      <mesh position={[-1.7, 1, 0]} scale={[0.99, 0.99, 0.99]}>
-        <planeGeometry attach="geometry" args={scale} />
+      <mesh scale={scale}>
+        <planeGeometry attach="geometry" args={[CONFIG.CARD_SPACE.HEIGHT, CONFIG.CARD_SPACE.WIDTH]} />
         <meshStandardMaterial attach="material" color="grey" />
       </mesh>
     </group>
