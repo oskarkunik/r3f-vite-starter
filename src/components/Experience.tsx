@@ -20,9 +20,9 @@ export const Experience = () => {
     <>
       <OrbitControls />
       <gridHelper args={[40, 20, 0xff0000, "teal"]} />
-      <axesHelper />
+      {/* <axesHelper /> */}
       {/* <Board /> */}
-      <group position={[boardOffsetTop(), 0, boardOffsetLeft()]}>
+      <group position={[boardOffsetTop(), 0.01, boardOffsetLeft()]}>
         {cardSpaces.map((cardSpace) => {
           const {
             id,
