@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import CardSpace from "./CardSpace";
+import CardSpace from "../components/CardSpace";
 
 const useCardSpaces = ({
   rows,

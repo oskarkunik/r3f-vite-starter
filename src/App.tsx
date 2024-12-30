@@ -2,7 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { Experience } from "./components/Experience";
 import React from "react";
 import { Environment } from "@react-three/drei";
-import { GameStateProvider } from './components/useGameState';
+import { GameStateProvider } from './hooks/useGameState';
 
 function App() {
 

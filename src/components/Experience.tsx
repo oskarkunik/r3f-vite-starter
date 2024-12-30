@@ -4,8 +4,8 @@ import { useControls } from "leva";
 import React, { useEffect, useState } from "react";
 import CardFront from './CardFront';
 import Board from './Board';
-import useCardSpaces from './useCardSpaces';
-import { useGameState } from './useGameState';
+import useCardSpaces from '../hooks/useCardSpaces';
+import { useGameState } from '../hooks/useGameState';
 
 const CONFIG = {
   rows: 2,
