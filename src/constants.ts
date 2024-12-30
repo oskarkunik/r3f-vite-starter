@@ -9,7 +9,7 @@ export const CONFIG = {
     WIDTH: 2,
   },
   CARD: {
-    OFFSET_TOP: 0.1,
+    OFFSET_TOP: 0.01,
     BOARD_SCALE: 0.9
   }
 };

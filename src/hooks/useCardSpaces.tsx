@@ -34,7 +34,7 @@ const useCardSpaces = ({
     });
 
     return spacesTable.flat();
-  }, [rows, columns, height, width]);
+  }, [rows, columns, height, width, enemyRows]);
 
   return { cardSpaces };
 };

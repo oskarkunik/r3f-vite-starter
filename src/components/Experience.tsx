@@ -40,12 +40,13 @@ export const Experience = () => {
             />
           );
         })}
-        {cardPositions.map(({ position: [left, top], id, isPlayer }) => (
+        {cardPositions.map(({ position: [left, top], id, isPlayer, name }) => (
           <CardFront
             key={id}
             position={[left, CONFIG.CARD.OFFSET_TOP, top]}
             cardScale={[CONFIG.CARD.BOARD_SCALE, 1, CONFIG.CARD.BOARD_SCALE]}
             isPlayer={isPlayer}
+            name={name}
           />
         ))}
       </group>
