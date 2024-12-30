@@ -49,7 +49,7 @@ const useCardSpaces = ({
     });
 
     return spacesTable;
-  }, [rows, columns, height, width]);
+  }, [rows, columns, height, width, onSpaceClick]);
 
   return spaces;
 };
