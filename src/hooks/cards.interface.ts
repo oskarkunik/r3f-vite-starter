@@ -10,8 +10,8 @@ export type SpacePosition = BoardPosition & {
 
 export type CardProperties = {
   properties?: {
-    power: number;
-    health: number;
+    power?: number;
+    health?: number;
   }
 }
 
@@ -20,4 +20,4 @@ export type CardID = string;
 export type CardPosition = SpacePosition & {
   name: string;
   id: CardID;
-} & CardProperties;
+} & Partial<CardProperties>;

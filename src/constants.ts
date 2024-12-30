@@ -1,3 +1,5 @@
+import { CardID, CardProperties } from './hooks/cards.interface';
+
 export const CONFIG = {
   BOARD: {
     ROWS: 2,
@@ -13,3 +15,37 @@ export const CONFIG = {
     BOARD_SCALE: 0.9
   }
 };
+
+export const CARDS: {
+  name: string;
+  id: CardID;
+  properties?: {
+    power?: number;
+    health?: number;
+  }
+}[] = [
+  {
+    name: 'Pafnucek',
+    id: 'foo',
+    properties: {
+      power: 3,
+      health: 3,
+    }
+  },
+  {
+    name: 'Kalasanty',
+    id: 'bar',
+    properties: {
+      power: 4,
+      health: 2,
+    }
+  },
+  {
+    name: 'Świnia',
+    id: 'baz',
+    properties: {
+      power: 1,
+      health: 6,
+    }
+  }
+]

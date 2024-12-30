@@ -3,19 +3,20 @@ import useCardSpaces from './useCardSpaces';
 import { BoardPosition, CardPosition, SpacePosition } from './cards.interface';
 import { button, useControls } from "leva";
 
-import { CONFIG } from '../constants';
+import { CONFIG, CARDS } from '../constants';
 
 const GameStateContext = createContext<
   | {
       cardPositions: CardPosition[];
       cardSpaces: SpacePosition[];
-      onSpaceClick: (position: SpacePosition) => void;
+      placeCard: (position: SpacePosition) => void;
     }
   | undefined
 >(undefined);
 
 const GameStateProvider = (({children}) => {
-  const { playerCardId } = useControls("Player", {
+  const { playerCardId, isPlayerTurn } = useControls("Player", {
+    isPlayerTurn: true,
     playerCardId: {
       value: "foo",
       options: ["foo", "bar", "baz"],
@@ -44,7 +45,15 @@ const GameStateProvider = (({children}) => {
     enemyRows: CONFIG.BOARD.ENEMY_ROWS
   })
 
-  const onSpaceClick = (position: SpacePosition) => {
+  const placeCard = (position: SpacePosition) => {
+    if (
+      (isPlayerTurn && !position.isPlayer) ||
+      (!isPlayerTurn && position.isPlayer)
+    ) {
+      console.log("Space belongs to other player, not placing card");
+      return;
+    }
+
     const {row, column} = position;
     if (
       cardPositions.some(
@@ -59,10 +68,13 @@ const GameStateProvider = (({children}) => {
         )
       );
     } else {
+      const cardConfig = CARDS.find(({id}) => playerCardId === id);
+      if (!cardConfig) {
+        throw new Error(`Card ${playerCardId} not found!`)
+      }
       const newCard = {
         ...position,
-        name: playerCardId,
-        id: playerCardId,
+        ...cardConfig
       }
       setCardPositions((current) => [...current, newCard]);
     }
@@ -77,7 +89,7 @@ const GameStateProvider = (({children}) => {
     <GameStateContext.Provider
       value={{
         ...gameState,
-        onSpaceClick,
+        placeCard,
       }}
     >
       {children}

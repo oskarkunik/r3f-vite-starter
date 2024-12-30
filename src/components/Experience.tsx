@@ -12,7 +12,7 @@ import { boardOffsetLeft, boardOffsetTop } from '../util/helpers';
 export const Experience = () => {
 
 
-  const { cardPositions, cardSpaces, onSpaceClick } = useGameState();
+  const { cardPositions, cardSpaces, placeCard } = useGameState();
 
   console.log(cardPositions)
   return (
@@ -31,7 +31,7 @@ export const Experience = () => {
               key={`${top}_${left}`}
               position={[left, 0, top]}
               scale={[1, 1, 1]}
-              onClick={() => onSpaceClick(cardSpace)}
+              onClick={() => placeCard(cardSpace)}
             />
           );
         })}
