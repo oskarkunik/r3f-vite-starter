@@ -1,57 +1,39 @@
-import React, { useMemo } from "react";
-import CardSpace from "../components/CardSpace";
+import { useMemo } from "react";
+import { CardPosition } from './cards.interface';
 
 const useCardSpaces = ({
   rows,
   columns,
   height,
   width,
-  onSpaceClick,
 }: {
   rows: number;
   columns: number;
   height: number;
   width: number;
-  onSpaceClick: ({
-    row,
-    column,
-    position,
-  }: {
-    row: number;
-    column: number;
-    position: [number, number];
-  }) => void;
-}) => {
-  const spaces = useMemo(() => {
-    const rowArrays = new Array(rows).fill([]);
-
-    const spacesTable = rowArrays.map((_, i) => {
-      const columnPositions = new Array(columns).fill(null).map((_, j) => {
-        const top = (i + 1) * height;
-        const left = -(j + 1) * width;
-        return (
-          <CardSpace
-            key={`space_${i + 1}_${j + 1}`}
-            position={[top, 0, left]}
-            scale={[height, width]}
-            onClick={() =>
-              onSpaceClick({
-                row: i + 1,
-                column: j + 1,
-                position: [top, left],
-              })
-            }
-          />
-        );
+}): {
+  cardSpaces: CardPosition[]
+} => {
+  const cardSpaces = useMemo(() => {
+    const spacesTable = new Array(rows).fill([]).map((_, i) => {
+      return new Array(columns).fill(null).map((_, j) => {
+        const row = i + 1;
+        const column = j + 1;
+        const top = row * height;
+        const left = column * width;
+        return {
+          id: `${row}_${column}`,
+          row,
+          column,
+          position: [top, left] as [number, number]
+        };
       });
-
-      return columnPositions;
     });
 
-    return spacesTable;
-  }, [rows, columns, height, width, onSpaceClick]);
+    return spacesTable.flat();
+  }, [rows, columns, height, width]);
 
-  return spaces;
+  return { cardSpaces };
 };
 
 export default useCardSpaces;

@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
+import useCardSpaces from './useCardSpaces';
+import { CardPosition } from './cards.interface';
 
 const CONFIG = {
   BOARD: {
@@ -10,13 +12,6 @@ const CONFIG = {
     WIDTH: 2,
   },
 };
-
-type CardPosition = {
-  id: string;
-  row: number;
-  column: number;
-  position: [number, number];
-}
 
 const GameStateContext = createContext<
   | {
@@ -38,6 +33,13 @@ const GameStateProvider = (({children}) => {
   const [cardPositions, setCardPositions] = useState<
     CardPosition[]
   >([]);
+
+  const { cardSpaces } = useCardSpaces({
+    rows: CONFIG.BOARD.ROWS,
+    columns: CONFIG.BOARD.COLUMNS,
+    height: CONFIG.CARD_SPACE.HEIGHT,
+    width: CONFIG.CARD_SPACE.WIDTH,
+  })
 
   const onSpaceClick = ({
     row,

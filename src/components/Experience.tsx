@@ -24,15 +24,12 @@ export const Experience = () => {
 
   useEffect(() => console.log(cardPositions), [cardPositions])
 
-  const cardSpaces = useCardSpaces({rows: CONFIG.rows, columns: CONFIG.columns, height: CARD_SPACE.height, width: CARD_SPACE.width, onSpaceClick});
-
   return (
     <>
       <OrbitControls />
       <gridHelper args={[40, 20, 0xff0000, "teal"]} />
       <axesHelper />
       {/* <Board /> */}
-      {cardSpaces}
       {cardPositions.map(({ position, id }) => {
         <CardFront
           key={id}
