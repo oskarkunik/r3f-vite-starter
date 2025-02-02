@@ -1,5 +1,5 @@
 import { useControls } from 'leva';
-import React from "react";
+import React, { ReactNode } from "react";
 
 export const CircleClock = () => {
   const MAX_VERTICLES_IN_CIRCLE = 32;
@@ -26,7 +26,7 @@ export const CircleClock = () => {
   });
 
 
-  const calculateGap = () => {
+  const calculateGap = (): number => {
     const gapLength = Math.PI * 2 / resolution * gap;
     console.log(gapLength)
     return gapLength;
@@ -47,19 +47,19 @@ export const CircleClock = () => {
 
   return (
     <>
-    {
-      Array(segments).fill(null).map((_, i) => {
-        const { verts, startAngle, length } = generatePart(i);
-        return (
-          <mesh>
-            <ringGeometry
-              args={[1, 1.4, verts, 1, startAngle, length]}
-            />
-            <meshStandardMaterial color="orange" wireframe={wireframe} />
-          </mesh>
-        );
-      })
-    }
+      {
+        Array(segments).fill(null).map((_: null, i: number): ReactNode => {
+          const { verts, startAngle, length } = generatePart(i);
+          return (
+            <mesh>
+              <ringGeometry
+                args={[1, 1.4, verts, 1, startAngle, length]}
+              />
+              <meshStandardMaterial color="orange" wireframe={wireframe} />
+            </mesh>
+          );
+        })
+      }
     </>
   );
 };
